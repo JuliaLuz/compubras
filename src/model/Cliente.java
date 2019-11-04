@@ -96,6 +96,4 @@ public class Cliente implements Serializable{
 		this.iE = iE;
 	}
 	
-	
-
 }

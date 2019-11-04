@@ -38,15 +38,6 @@ public class Vendedor implements Serializable{
 	
 	@Enumerated(EnumType.STRING)
 	private FaixaComissao faixaComissao;
-	
-//	CREATE TABLE `vendedor` (
-//			  `CodVendedor` int(4) NOT NULL AUTO_INCREMENT,
-//			  `Nome` varchar(45) NOT NULL,
-//			  `SalarioFixo` decimal(10,2) NOT NULL,
-//			  `FaixaComissao` enum('A','B','C','D') NOT NULL,
-//			  PRIMARY KEY (`CodVendedor`)
-//			) ENGINE=InnoDB AUTO_INCREMENT=247 DEFAULT CHARSET=utf8;
-//			/*!40101 SET character_set_client = @saved_cs_client */;
 
 	public Integer getCodVendedor() {
 		return codVendedor;

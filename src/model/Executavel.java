@@ -44,7 +44,7 @@ public class Executavel {
 	
 	private static Vendedor buscarVendedor(EntityManager em) {
 		return em.find(Vendedor.class, 247);
-	}
+	}	
 	
 	private static void fazerPedido(EntityManager em, Cliente cliente, Vendedor vendedor) {
 		Pedido pedido = new Pedido(null, LocalDate.of(2020, 10, 10), LocalDate.now(), cliente, vendedor);

@@ -33,17 +33,6 @@ public class ItemPedido {
 	@JoinColumn(name = "CodProduto")
 	private Produto produto;
 	
-//	`CodItemPedido` int(4) NOT NULL AUTO_INCREMENT,
-//	  `CodPedido` int(4) NOT NULL,
-//	  `CodProduto` int(4) NOT NULL,
-//	  `Quantidade` int(5) NOT NULL,
-//	  PRIMARY KEY (`CodItemPedido`),
-//	  KEY `CodPedido` (`CodPedido`),
-//	  KEY `CodProduto` (`CodProduto`),
-//	  CONSTRAINT `itempedido_ibfk_1` FOREIGN KEY (`CodPedido`) REFERENCES `pedido` (`CodPedido`),
-//	  CONSTRAINT `itempedido_ibfk_2` FOREIGN KEY (`CodProduto`) REFERENCES `produto` (`CodProduto`)
-//	) ENGINE=InnoDB AUTO_INCREMENT=12343 DEFAULT CHARSET=utf8;
-	
 	public Integer getCodItemPedido() {
 		return codItemPedido;
 	}

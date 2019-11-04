@@ -37,19 +37,6 @@ public class Pedido {
 	@ManyToOne
 	@JoinColumn(name = "CodVendedor")
 	private Vendedor vendedor;
-
-//	CREATE TABLE `pedido` (
-//			  `CodPedido` int(4) NOT NULL AUTO_INCREMENT,
-//			  `PrazoEntrega` date NOT NULL,
-//			  `DataPedido` date NOT NULL,
-//			  `CodCliente` int(4) NOT NULL,
-//			  `CodVendedor` int(4) NOT NULL,
-//			  PRIMARY KEY (`CodPedido`),
-//			  KEY `CodCliente` (`CodCliente`),
-//			  KEY `CodVendedor` (`CodVendedor`),
-//			  CONSTRAINT `pedido_ibfk_1` FOREIGN KEY (`CodCliente`) REFERENCES `cliente` (`CodCliente`),
-//			  CONSTRAINT `pedido_ibfk_2` FOREIGN KEY (`CodVendedor`) REFERENCES `vendedor` (`CodVendedor`)
-//			) ENGINE=InnoDB AUTO_INCREMENT=8433 DEFAULT CHARSET=utf8;
 	
 	public Integer getCodPedido() {
 		return codPedido;
