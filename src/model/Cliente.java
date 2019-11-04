@@ -28,7 +28,7 @@ public class Cliente implements Serializable{
 	private Integer codCliente;
 
 	private String nome;
-	
+		
 	private String endereco;
 	
 	private String cidade;
