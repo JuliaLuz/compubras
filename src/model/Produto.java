@@ -1,5 +1,6 @@
 package model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,10 +19,13 @@ public class Produto {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name = "CodProduto", columnDefinition = "int(4)")
 	private Integer codProduto;
 	
+	@Column(name = "Descricao", columnDefinition = "varchar(100)", nullable = false)
 	private String descricao;
 	
+	@Column(name = "ValorUnitario", columnDefinition = "decimal(10,2)", nullable = false)
 	private Double valorUnitario;
 	
 

@@ -2,6 +2,7 @@ package model;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,21 +26,28 @@ public class Cliente implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name = "CodCliente", columnDefinition="int(4)")
 	private Integer codCliente;
-
+	
+	@Column(name = "Nome", columnDefinition = "varchar(100)", nullable = false)
 	private String nome;
-		
+	
+	@Column(name = "Endereco", columnDefinition = "varchar(255)", nullable = false)
 	private String endereco;
 	
+	@Column(name = "Cidade", columnDefinition = "varchar(60)", nullable = false)
 	private String cidade;
 	
+	@Column(name = "Cep", columnDefinition = "varchar(11)", nullable = false)
 	private String cep;
 	
+	@Column(name = "Uf", columnDefinition = "char(2)", nullable = false)
 	private String uf;
 	
+	@Column(name = "Ie", columnDefinition = "varchar(12)", nullable = false)
 	private String iE;
 	
-
+	  
 	public Integer getCodCliente() {
 		return codCliente;
 	}

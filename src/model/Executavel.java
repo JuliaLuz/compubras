@@ -10,7 +10,7 @@ public class Executavel {
 
 	public static void main(String[] args) {
 
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("compubras");
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("teste");
 		EntityManager em = emf.createEntityManager();
 		
 		em.getTransaction().begin();

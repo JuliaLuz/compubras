@@ -29,14 +29,17 @@ public class Vendedor implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name = "CodVendedor")
+	@Column(name = "CodVendedor", columnDefinition = "int(4)")
 	private Integer codVendedor;
 	
+	@Column(name = "Nome", columnDefinition = "varchar(45)", nullable = false)
 	private String nome;
 	
+	@Column(name = "SalarioFixo", columnDefinition = "decimal(10,2)", nullable = false)
 	private Double salarioFixo;
 	
 	@Enumerated(EnumType.STRING)
+	@Column(name = "FaixaComissao", columnDefinition = "enum('A','B','C','D')", nullable = false)
 	private FaixaComissao faixaComissao;
 
 	public Integer getCodVendedor() {

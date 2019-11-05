@@ -2,6 +2,7 @@ package model;
 
 import java.time.LocalDate;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,19 +24,22 @@ public class Pedido {
 	}
 
 	@Id
+	@Column(name = "CodPedido", columnDefinition="int(4)")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer codPedido;
 	
+	@Column(name = "PrazoEntrega", columnDefinition="date", nullable = false)
 	private LocalDate prazoEntrega;
 	
+	@Column(name = "DataPedido", columnDefinition="date", nullable = false)
 	private LocalDate dataPedido;
 	
 	@ManyToOne
-	@JoinColumn(name = "CodCliente")
+	@JoinColumn(name = "CodCliente", columnDefinition="int(4)", nullable = false)
 	private Cliente cliente;
 	
 	@ManyToOne
-	@JoinColumn(name = "CodVendedor")
+	@JoinColumn(name = "CodVendedor", columnDefinition="int(4)", nullable = false)
 	private Vendedor vendedor;
 	
 	public Integer getCodPedido() {

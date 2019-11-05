@@ -49,7 +49,6 @@ public class JPQLQueries {
 	
 	//questão 2
 	private static void buscarClientes(EntityManager em) {
-		
 		TypedQuery<Cliente> buscarClientes = em.createQuery("SELECT distinct p.cliente FROM Pedido p "
 				+ "WHERE (p.cliente.uf = 'RS' OR p.cliente.uf = 'SC') "
 				+ "AND datediff(p.prazoEntrega, p.dataPedido) > 10", Cliente.class);
@@ -60,13 +59,12 @@ public class JPQLQueries {
 		}
 	}
 	
-	private static void buscarVendedores(EntityManager em) {
+	private static void buscarVendedores(EntityManager em) {	
 //		Exiba a relação com os melhores vendedores (considerando apenas a quantidade de pedidos) 
 //		para o mês de setembro (incluindo todos os anos). Exiba o nome do vendedor, o ano e o número
 //		total de pedidos daquele ano.
-		TypedQuery<Vendedor> buscarClientes = em.createQuery("SELECT distinct p.cliente FROM Pedido p "
-				+ "WHERE (p.cliente.uf = 'RS' OR p.cliente.uf = 'SC') "
-				+ "AND datediff(p.prazoEntrega, p.dataPedido) > 10", Vendedor.class);
+		TypedQuery<Vendedor> buscarVendedor = em.createQuery("SELECT p.vendedor, p.ano, year(p.datapedido), count(p) FROM Pedido p "
+				+ "where month(p.datapedido) = 9", Vendedor.class);
 	}
 
 }
