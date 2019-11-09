@@ -17,19 +17,23 @@ public class Executavel {
 		
 //		cadastrarCliente(em);
 //		cadastrarVendedor(em);
+//		cadastrarProduto(em);
 		
-//		Cliente cliente = buscarCliente(em);
-//		Vendedor vendedor = buscarVendedor(em);
-//		fazerPedido(em, cliente, vendedor);
+		Cliente cliente = buscarCliente(em, 1);
+		Vendedor vendedor = buscarVendedor(em, 1);
+		Produto produto = buscarProduto(em, 1);
+
+		System.out.println(cliente.getNome() + " - " + vendedor.getNome() + " - " + produto.getDescricao());
+	
+//		fazerPedido(em, produto, cliente, vendedor);
 		
 		em.getTransaction().commit();
 		em.close();
 		emf.close();
-
 	}
 	
-	private static Cliente buscarCliente(EntityManager em) {
-		return em.find(Cliente.class, 1577);
+	private static Cliente buscarCliente(EntityManager em, int id) {
+		return em.find(Cliente.class, id);
 	}
 	
 	private static void cadastrarCliente(EntityManager em) {
@@ -42,8 +46,8 @@ public class Executavel {
 		em.persist(vendedor);
 	}
 	
-	private static Vendedor buscarVendedor(EntityManager em) {
-		return em.find(Vendedor.class, 247);
+	private static Vendedor buscarVendedor(EntityManager em, int id) {
+		return em.find(Vendedor.class, id);
 	}	
 	
 	private static void fazerPedido(EntityManager em, Cliente cliente, Vendedor vendedor) {
@@ -51,13 +55,18 @@ public class Executavel {
 		em.persist(pedido);
 	}
 	
-	private void cadastrarProduto(EntityManager em) {
-		//TODO: implementar
+	private static void cadastrarProduto(EntityManager em) {
+		Produto produto = new Produto(null, "Produto bem top", 10.5);
+		em.persist(produto);
 	}
 	
-	private void adicionarProdutoEmPedido(EntityManager em) {
-		//TODO: implementar
+	private static Produto buscarProduto(EntityManager em, int id) {
+		return em.find(Produto.class, id);
 	}
 	
+	private static void fazerPedido(EntityManager em, Produto produto, Cliente cliente, Vendedor vendedor) {
+		Pedido pedido = new Pedido(null, LocalDate.of(2019, 11, 13), LocalDate.now(), cliente, vendedor);
+		em.persist(pedido);
+	}
 
 }

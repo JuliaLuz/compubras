@@ -18,21 +18,8 @@ public class JPQLQueries {
 		em.getTransaction().begin();
 		
 		buscarClientes(em);
-//		CriteriaBuilder cb = em.getCriteriaBuilder();
-//
-//		CriteriaQuery<Table1> query = cb.createQuery(Table1.class);
-//
-//		Root<Table1> root = query.from(Table1.class);
-//
-//		List<Predicate> predicates = new ArrayList<Predicate>();
-//
-//		Calendar c = Calendar.getInstance();
-//		c.add(Calendar.DAY_OF_YEAR, -20);
-//		Date myDate = c.getTime();
-//
-//		predicates.add(cb.lessThanOrEqualTo(root.<Date>get("created"), myDate));
-//
-//		query.where(cb.and(predicates.toArray(new Predicate[0])));
+		
+		buscarVendedores(em);
 		
 		em.close();
 		emf.close();
@@ -63,8 +50,17 @@ public class JPQLQueries {
 //		Exiba a relação com os melhores vendedores (considerando apenas a quantidade de pedidos) 
 //		para o mês de setembro (incluindo todos os anos). Exiba o nome do vendedor, o ano e o número
 //		total de pedidos daquele ano.
-		TypedQuery<Vendedor> buscarVendedor = em.createQuery("SELECT p.vendedor, p.ano, year(p.datapedido), count(p) FROM Pedido p "
-				+ "where month(p.datapedido) = 9", Vendedor.class);
+		TypedQuery<VendedorDTO> buscarVendedor = em.createQuery("SELECT new model.vendedorDTO(p.vendedor.nome, "
+				+ "year(p.dataPedido), count(p))"
+				+ " FROM Pedido p where month(p.dataPedido) = 9 order by count(p)", VendedorDTO.class);
+		
+		List<VendedorDTO> results = buscarVendedor.getResultList();
+		for (VendedorDTO result : results) {
+			System.out.println("Vendedor: " + result
+					+ " - Ano: " + result
+					+ " - Quantidade de pedidos: " + result);
+		}
+		
 	}
 
 }

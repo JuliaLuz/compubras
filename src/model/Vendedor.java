@@ -15,7 +15,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "vendedor")
-public class Vendedor implements Serializable{
+public class Vendedor implements Serializable {
 	
 	public Vendedor() {}
 
