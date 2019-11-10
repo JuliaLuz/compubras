@@ -9,6 +9,9 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 
+import dto.QuantidadePedidaPorProdutoDTO;
+import dto.VendedorDTO;
+
 public class JPQLQueries {
 
 	public static void main(String[] args) {
@@ -17,9 +20,11 @@ public class JPQLQueries {
 		
 		em.getTransaction().begin();
 		
-		buscarClientes(em);
+		buscarQuantidade(em);
 		
-		buscarVendedores(em);
+//		buscarClientes(em);
+		
+//		buscarVendedores(em);
 		
 		em.close();
 		emf.close();
@@ -27,11 +32,26 @@ public class JPQLQueries {
 	}
 	//questão 1
 	private static void buscarQuantidade(EntityManager em) {
+		//passando parametro
 		Query query = em.createQuery("SELECT count(ip.pedido) FROM ItemPedido"
 				+ " ip WHERE ip.produto.codProduto = :codigo");
 		query.setParameter("codigo", 1);
 		
 		System.out.println(query.getSingleResult());
+		
+		//lista
+		TypedQuery<QuantidadePedidaPorProdutoDTO> typedQuery = em.createQuery(
+				"SELECT new dto.QuantidadePedidaPorProdutoDTO(p.codProduto, p.descricao, coalesce(sum(ip.quantidade), 0))"
+				+ " FROM Produto p LEFT JOIN ItemPedido ip ON ip.produto.codProduto = p.codProduto"
+				+ " GROUP BY p.codProduto "
+				+ " ORDER BY coalesce(sum(ip.quantidade), 0) ASC, p.codProduto ASC ", QuantidadePedidaPorProdutoDTO.class);
+		
+		List<QuantidadePedidaPorProdutoDTO> results = typedQuery.getResultList();
+		
+		for(QuantidadePedidaPorProdutoDTO result: results) {
+			System.out.println(result.getCodPedido() + " | " + result.getDescricao() + " | " + result.getQuantidade());
+		}
+
 	}
 	
 	//questão 2
@@ -41,24 +61,30 @@ public class JPQLQueries {
 				+ "AND datediff(p.prazoEntrega, p.dataPedido) > 10", Cliente.class);
 		
 		List<Cliente> clientes = buscarClientes.getResultList();
+		int cont = 0;
 		for (Cliente cliente : clientes) {
 			System.out.println(cliente.getCodCliente() + " - " + cliente.getNome() + " - " + cliente.getUf());
+			cont++;
 		}
+		System.out.println(cont);
 	}
 	
 	private static void buscarVendedores(EntityManager em) {	
 //		Exiba a relação com os melhores vendedores (considerando apenas a quantidade de pedidos) 
 //		para o mês de setembro (incluindo todos os anos). Exiba o nome do vendedor, o ano e o número
 //		total de pedidos daquele ano.
-		TypedQuery<VendedorDTO> buscarVendedor = em.createQuery("SELECT new model.vendedorDTO(p.vendedor.nome, "
-				+ "year(p.dataPedido), count(p))"
-				+ " FROM Pedido p where month(p.dataPedido) = 9 order by count(p)", VendedorDTO.class);
+		TypedQuery<VendedorDTO> buscarVendedor = em.createQuery("SELECT new dto.VendedorDTO(p.vendedor.nome,"
+				+ " year(p.dataPedido), count(p))"
+				+ " FROM Pedido p where month(p.dataPedido) = 9"
+				+ " group by p.vendedor.codVendedor, year(p.dataPedido)"
+				+ " order by year(p.dataPedido) desc, count(p) desc, p.vendedor.nome", VendedorDTO.class);
 		
 		List<VendedorDTO> results = buscarVendedor.getResultList();
+		System.out.println("VENDEDOR  |  ANO  |  QTD PEDIDOS");
 		for (VendedorDTO result : results) {
-			System.out.println("Vendedor: " + result
-					+ " - Ano: " + result
-					+ " - Quantidade de pedidos: " + result);
+			System.out.println(result.getNome() + " | "
+					+ result.getAno() + " | "
+					+ result.getQuantidadePedidos());
 		}
 		
 	}
