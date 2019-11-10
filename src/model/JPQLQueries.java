@@ -31,6 +31,7 @@ public class JPQLQueries {
 
 	}
 	//questão 1
+	//Mostrar a quantidade pedida para um determinado produto com um determinado código a partir da tabela item de pedido.
 	private static void buscarQuantidade(EntityManager em) {
 		//passando parametro
 		Query query = em.createQuery("SELECT count(ip.pedido) FROM ItemPedido"
@@ -39,7 +40,7 @@ public class JPQLQueries {
 		
 		System.out.println(query.getSingleResult());
 		
-		//lista
+		//lista de todos produtos
 		TypedQuery<QuantidadePedidaPorProdutoDTO> typedQuery = em.createQuery(
 				"SELECT new dto.QuantidadePedidaPorProdutoDTO(p.codProduto, p.descricao, coalesce(sum(ip.quantidade), 0))"
 				+ " FROM Produto p LEFT JOIN ItemPedido ip ON ip.produto.codProduto = p.codProduto"
@@ -55,6 +56,7 @@ public class JPQLQueries {
 	}
 	
 	//questão 2
+	//Clientes com prazo de entrega superior a 10 dias e que pertençam aos estados do Rio Grande do Sul ou Santa Catarina.
 	private static void buscarClientes(EntityManager em) {
 		TypedQuery<Cliente> buscarClientes = em.createQuery("SELECT distinct p.cliente FROM Pedido p "
 				+ "WHERE (p.cliente.uf = 'RS' OR p.cliente.uf = 'SC') "
@@ -69,10 +71,11 @@ public class JPQLQueries {
 		System.out.println(cont);
 	}
 	
-	private static void buscarVendedores(EntityManager em) {	
-//		Exiba a relação com os melhores vendedores (considerando apenas a quantidade de pedidos) 
-//		para o mês de setembro (incluindo todos os anos). Exiba o nome do vendedor, o ano e o número
-//		total de pedidos daquele ano.
+	//questão 3
+	//Exiba a relação com os melhores vendedores (considerando apenas a quantidade de pedidos) 
+	//para o mês de setembro (incluindo todos os anos). Exiba o nome do vendedor, o ano e o número
+	//total de pedidos daquele ano.
+	private static void buscarVendedores(EntityManager em) {		
 		TypedQuery<VendedorDTO> buscarVendedor = em.createQuery("SELECT new dto.VendedorDTO(p.vendedor.nome,"
 				+ " year(p.dataPedido), count(p))"
 				+ " FROM Pedido p where month(p.dataPedido) = 9"
