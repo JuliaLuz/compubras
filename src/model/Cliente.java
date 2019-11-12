@@ -47,7 +47,6 @@ public class Cliente implements Serializable{
 	@Column(name = "Ie", columnDefinition = "varchar(12)", nullable = false)
 	private String iE;
 	
-	  
 	public Integer getCodCliente() {
 		return codCliente;
 	}
