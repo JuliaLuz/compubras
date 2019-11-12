@@ -60,5 +60,31 @@ public class ItemPedido {
 	public void setProduto(Produto produto) {
 		this.produto = produto;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((codItemPedido == null) ? 0 : codItemPedido.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ItemPedido other = (ItemPedido) obj;
+		if (codItemPedido == null) {
+			if (other.codItemPedido != null)
+				return false;
+		} else if (!codItemPedido.equals(other.codItemPedido))
+			return false;
+		return true;
+	}
+	
 	
 }

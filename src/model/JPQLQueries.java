@@ -8,6 +8,7 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 
 import dto.QuantidadePedidaPorProdutoDTO;
 import dto.VendedorDTO;
@@ -33,6 +34,14 @@ public class JPQLQueries {
 	//questão 1
 	//Mostrar a quantidade pedida para um determinado produto com um determinado código a partir da tabela item de pedido.
 	private static void buscarQuantidade(EntityManager em) {
+		
+//		CriteriaBuilder builder  = em.getCriteriaBuilder();
+//		
+//		CriteriaQuery<QuantidadePedidaPorProdutoDTO> criteria = builder.createQuery(QuantidadePedidaPorProdutoDTO.class);
+//		
+//		criteria.from(ItemPedido.class);
+//		criteria.from(Produto.class);
+		
 		//lista de todos produtos
 		TypedQuery<QuantidadePedidaPorProdutoDTO> typedQuery = em.createQuery(
 				"SELECT new dto.QuantidadePedidaPorProdutoDTO(p.codProduto, p.descricao, coalesce(sum(ip.quantidade), 0))"

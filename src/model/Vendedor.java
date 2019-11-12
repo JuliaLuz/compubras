@@ -73,5 +73,30 @@ public class Vendedor implements Serializable {
 	public void setFaixaComissao(FaixaComissao faixaComissao) {
 		this.faixaComissao = faixaComissao;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((codVendedor == null) ? 0 : codVendedor.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Vendedor other = (Vendedor) obj;
+		if (codVendedor == null) {
+			if (other.codVendedor != null)
+				return false;
+		} else if (!codVendedor.equals(other.codVendedor))
+			return false;
+		return true;
+	}
 	
 }

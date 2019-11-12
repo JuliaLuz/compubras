@@ -82,4 +82,30 @@ public class Pedido {
 		this.vendedor = vendedor;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((codPedido == null) ? 0 : codPedido.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Pedido other = (Pedido) obj;
+		if (codPedido == null) {
+			if (other.codPedido != null)
+				return false;
+		} else if (!codPedido.equals(other.codPedido))
+			return false;
+		return true;
+	}
+
+	
 }
