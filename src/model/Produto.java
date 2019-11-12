@@ -1,20 +1,25 @@
 package model;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Produto {
 	
 	public Produto() {}
 
-	public Produto(Integer codProduto, String descricao, Double valorUnitario) {
+	public Produto(Integer codProduto, String descricao, Double valorUnitario, List<ItemPedido> itensPedidos) {
 		this.codProduto = codProduto;
 		this.descricao = descricao;
 		this.valorUnitario = valorUnitario;
+		this.itensPedidos = itensPedidos;
 	}
 
 	@Id
@@ -28,6 +33,8 @@ public class Produto {
 	@Column(name = "ValorUnitario", columnDefinition = "decimal(10,2)", nullable = false)
 	private Double valorUnitario;
 	
+	@OneToMany(mappedBy = "produto", targetEntity = ItemPedido.class, cascade = CascadeType.ALL)
+	private List<ItemPedido> itensPedidos;
 
 	public Integer getCodProduto() {
 		return codProduto;
@@ -51,6 +58,14 @@ public class Produto {
 
 	public void setValorUnitario(Double valorUnitario) {
 		this.valorUnitario = valorUnitario;
+	}
+	
+	public List<ItemPedido> getItensPedidos() {
+		return itensPedidos;
+	}
+
+	public void setItensPedidos(List<ItemPedido> itensPedidos) {
+		this.itensPedidos = itensPedidos;
 	}
 
 	@Override

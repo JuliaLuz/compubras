@@ -1,26 +1,28 @@
 package dto;
 
+import model.Produto;
+
 public class QuantidadePedidaPorProdutoDTO {
 	
 	public QuantidadePedidaPorProdutoDTO() {};
 	
-	public QuantidadePedidaPorProdutoDTO(int codPedido, String descricao, long quantidade) {
+	public QuantidadePedidaPorProdutoDTO(int codProduto, String descricao, long quantidade) {
 		super();
-		this.codPedido = codPedido;
+		this.codProduto = codProduto;
 		this.descricao = descricao;
 		this.quantidade = quantidade;
 	}
 
-	private int codPedido;
+	private int codProduto;
 	private String descricao;
 	private long quantidade;
 	
-	public int getCodPedido() {
-		return codPedido;
+	public int getCodProduto() {
+		return codProduto;
 	}
 
-	public void setCodPedido(int codPedido) {
-		this.codPedido = codPedido;
+	public void setCodProduto(int codPedido) {
+		this.codProduto = codPedido;
 	}
 
 	public String getDescricao() {

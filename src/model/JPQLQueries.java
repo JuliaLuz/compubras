@@ -9,6 +9,10 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
+import javax.persistence.criteria.Order;
+import javax.persistence.criteria.Root;
 
 import dto.QuantidadePedidaPorProdutoDTO;
 import dto.VendedorDTO;
@@ -21,9 +25,9 @@ public class JPQLQueries {
 		
 		em.getTransaction().begin();
 		
-//		buscarQuantidade(em);
+		buscarQuantidade(em);
 		
-		buscarClientes(em);
+//		buscarClientes(em);
 		
 //		buscarVendedores(em);
 		
@@ -39,21 +43,32 @@ public class JPQLQueries {
 //		
 //		CriteriaQuery<QuantidadePedidaPorProdutoDTO> criteria = builder.createQuery(QuantidadePedidaPorProdutoDTO.class);
 //		
-//		criteria.from(ItemPedido.class);
+//		Root<Produto> root = criteria.from(Produto.class);
+//		Join<Produto, ItemPedido> join = root.join("produto", JoinType.LEFT);
 //		criteria.from(Produto.class);
-		
+//		criteria.groupBy(root.get("codProduto"));
+//		criteria.orderBy((Order) builder.desc(builder.sum(root.get("quantidade"))));
+//		
+	
 		//lista de todos produtos
 		TypedQuery<QuantidadePedidaPorProdutoDTO> typedQuery = em.createQuery(
 				"SELECT new dto.QuantidadePedidaPorProdutoDTO(p.codProduto, p.descricao, coalesce(sum(ip.quantidade), 0))"
-				+ " FROM Produto p LEFT JOIN ItemPedido ip ON ip.produto.codProduto = p.codProduto"
+				+ " FROM Produto p LEFT JOIN p.itensPedidos ip"
 				+ " GROUP BY p.codProduto "
 				+ " ORDER BY coalesce(sum(ip.quantidade), 0) ASC, p.codProduto ASC ", QuantidadePedidaPorProdutoDTO.class);
 
 		List<QuantidadePedidaPorProdutoDTO> results = typedQuery.getResultList();
+		
+//		for(int i=0; i<=10; i++) {
+//			System.out.println(results.get(i).getCodProduto() + " | " + results.get(i).getDescricao() + " | " + results.get(i).getQuantidade());
+//		}
+		
+//		int cont = 0;
 
 		for(QuantidadePedidaPorProdutoDTO result: results) {
-			System.out.println(result.getCodPedido() + " | " + result.getDescricao() + " | " + result.getQuantidade());
+			System.out.println(result.getCodProduto() + " | " + result.getDescricao() + " | " + result.getQuantidade());
 		}
+//		System.out.println(cont);
 
 	}
 	

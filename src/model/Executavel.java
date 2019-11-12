@@ -10,7 +10,7 @@ public class Executavel {
 
 	public static void main(String[] args) {
 
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("teste");
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("compubras");
 		EntityManager em = emf.createEntityManager();
 		
 		em.getTransaction().begin();
@@ -56,7 +56,7 @@ public class Executavel {
 	}
 	
 	private static void cadastrarProduto(EntityManager em) {
-		Produto produto = new Produto(null, "Produto bem top", 10.5);
+		Produto produto = new Produto(null, "Produto bem top", 10.5, null);
 		em.persist(produto);
 	}
 	

@@ -15,7 +15,7 @@ public class Pedido {
 	
 	public Pedido() {}
 	
-	public Pedido(Integer codPedido, LocalDate prazoEntrega, LocalDate dataPedido, Cliente cliente, Vendedor vendedor) {
+	public Pedido(Integer codPedido, LocalDate prazoEntrega, LocalDate dataPedido, Cliente cliente, Vendedor vendedor ) {
 		this.codPedido = codPedido;
 		this.prazoEntrega = prazoEntrega;
 		this.dataPedido = dataPedido;
@@ -81,6 +81,7 @@ public class Pedido {
 	public void setVendedor(Vendedor vendedor) {
 		this.vendedor = vendedor;
 	}
+
 
 	@Override
 	public int hashCode() {
