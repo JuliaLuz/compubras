@@ -20,9 +20,9 @@ public class JPQLQueries {
 		
 		em.getTransaction().begin();
 		
-		buscarQuantidade(em);
+//		buscarQuantidade(em);
 		
-//		buscarClientes(em);
+		buscarClientes(em);
 		
 //		buscarVendedores(em);
 		
@@ -33,22 +33,15 @@ public class JPQLQueries {
 	//questão 1
 	//Mostrar a quantidade pedida para um determinado produto com um determinado código a partir da tabela item de pedido.
 	private static void buscarQuantidade(EntityManager em) {
-		//passando parametro
-		Query query = em.createQuery("SELECT count(ip.pedido) FROM ItemPedido"
-				+ " ip WHERE ip.produto.codProduto = :codigo");
-		query.setParameter("codigo", 1);
-		
-		System.out.println(query.getSingleResult());
-		
 		//lista de todos produtos
 		TypedQuery<QuantidadePedidaPorProdutoDTO> typedQuery = em.createQuery(
 				"SELECT new dto.QuantidadePedidaPorProdutoDTO(p.codProduto, p.descricao, coalesce(sum(ip.quantidade), 0))"
 				+ " FROM Produto p LEFT JOIN ItemPedido ip ON ip.produto.codProduto = p.codProduto"
 				+ " GROUP BY p.codProduto "
 				+ " ORDER BY coalesce(sum(ip.quantidade), 0) ASC, p.codProduto ASC ", QuantidadePedidaPorProdutoDTO.class);
-		
+
 		List<QuantidadePedidaPorProdutoDTO> results = typedQuery.getResultList();
-		
+
 		for(QuantidadePedidaPorProdutoDTO result: results) {
 			System.out.println(result.getCodPedido() + " | " + result.getDescricao() + " | " + result.getQuantidade());
 		}
@@ -58,17 +51,15 @@ public class JPQLQueries {
 	//questão 2
 	//Clientes com prazo de entrega superior a 10 dias e que pertençam aos estados do Rio Grande do Sul ou Santa Catarina.
 	private static void buscarClientes(EntityManager em) {
-		TypedQuery<Cliente> buscarClientes = em.createQuery("SELECT distinct p.cliente FROM Pedido p "
+		TypedQuery<Cliente> buscarClientes = em.createQuery("SELECT p.cliente FROM Pedido p "
 				+ "WHERE (p.cliente.uf = 'RS' OR p.cliente.uf = 'SC') "
-				+ "AND datediff(p.prazoEntrega, p.dataPedido) > 10", Cliente.class);
+				+ "AND datediff(p.prazoEntrega, p.dataPedido) > 10 group by p.cliente.codCliente", Cliente.class);
 		
 		List<Cliente> clientes = buscarClientes.getResultList();
-		int cont = 0;
 		for (Cliente cliente : clientes) {
 			System.out.println(cliente.getCodCliente() + " - " + cliente.getNome() + " - " + cliente.getUf());
-			cont++;
+
 		}
-		System.out.println(cont);
 	}
 	
 	//questão 3
